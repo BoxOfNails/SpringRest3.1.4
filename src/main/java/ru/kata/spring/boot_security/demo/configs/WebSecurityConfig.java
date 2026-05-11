@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.configs;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -33,6 +34,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/register/**").permitAll()
                                 .anyRequest().authenticated())
+                .httpBasic(Customizer.withDefaults())
                 .formLogin(form ->
                         form
                                 .loginPage("/showMyLoginPage")
@@ -40,6 +42,7 @@ public class WebSecurityConfig {
                                 .successHandler(customAuthenticationSuccessHandler)
                                 .permitAll()
                 )
+                .csrf(csrf -> csrf.disable())
                 .logout(logout -> logout.permitAll()
                 );
         return http.build();

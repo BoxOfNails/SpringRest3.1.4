@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ru.kata</groupId>
-	<artifactId>spring-boot_security-demo</artifactId>
+	<artifactId>spring-boot_rest-demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot_security-demo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>spring-boot_rest-demo</name>
+	<description>Demo project for Spring Boot Rest</description>
 	<properties>
 		<java.version>25</java.version>
 	</properties>
@@ -27,9 +27,12 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
@@ -48,6 +51,12 @@
 			<artifactId>spring-boot-starter-data-jpa-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

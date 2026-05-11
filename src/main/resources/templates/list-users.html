@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>User Directory</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
 </head>
+
 <body>
-<div class="page-header  text-bg-dark">
-    <div class="row" >
-        <div class="col-md-6 align-self-center ps-4">
-            <span th:text="${#ctx.session.user.email}"/>
-            <span>with roles</span>
-            <span th:each="role,iterStat : ${#ctx.session.user.roles}"
-                  th:text="${#strings.replace(role, 'ROLE_', '')} + ${!iterStat.last ? ', ' : ''}"></span>
-        </div>
-        <div class="text-end col-md-6">
-            <form action="#" th:action="@{/logout}" method="POST">
+    <div class="page-header  text-bg-dark">
+        <div class="row">
+            <div class="col-md-6 align-self-center ps-4">
+                <span th:text="${#ctx.session.user.email}" />
+                <span>with roles</span>
+                <span th:each="role,iterStat : ${#ctx.session.user.roles}"
+                    th:text="${#strings.replace(role, 'ROLE_', '')} + ${!iterStat.last ? ', ' : ''}"></span>
+            </div>
+            <div class="text-end col-md-6">
+                <form action="#" th:action="@{/logout}" method="POST">
 
-                <input type="submit" class="btn btn-link link-secondary link-underline link-underline-opacity-0" value="Logout"/>
+                    <input type="submit" class="btn btn-link link-secondary link-underline link-underline-opacity-0"
+                        value="Logout" />
 
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-<div class="row pt-3">
+    <div class="row pt-3">
         <div class="col-md-2">
             <nav class="nav nav-pills flex-column">
                 <a class="nav-link active" aria-current="page" href="#">Admin</a>
@@ -40,10 +44,12 @@
                 <div>
                     <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+                            <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab"
+                                aria-controls="home" aria-selected="true">Home</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">New User</a>
+                            <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab"
+                                aria-controls="profile" aria-selected="false">New User</a>
                         </li>
                     </ul>
                 </div>
@@ -56,35 +62,18 @@
                             <div class="mx-3">
                                 <table class="table table-bordered table-striped my-2 ">
                                     <thead class="table-dark">
-                                    <tr>
-                                        <th>id</th>
-                                        <th>Username</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                        <th>Update/Delete</th>
-                                    </tr>
+                                        <tr>
+                                            <th>id</th>
+                                            <th>Username</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Update/Delete</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="tempUser : ${users}">
-                                        <td th:text="${tempUser.id}" />
-                                        <td th:text="${tempUser.username}" />
-                                        <td th:text="${tempUser.firstName}" />
-                                        <td th:text="${tempUser.lastName}" />
-                                        <td th:text="${tempUser.email}" />
-                                        <td>
-                        <span th:each="role,iterStat : ${tempUser.roles}"
-                              th:text="${#strings.replace(role, 'ROLE_', '')} + ${!iterStat.last ? ', ' : ''}"></span>
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#updateModal" data-bs-my-mode="update" th:data-bs-id="${tempUser.id}">Update</button>
-                                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#updateModal" data-bs-my-mode="delete" th:data-bs-id="${tempUser.id}">Delete</button>
 
-                                        </td>
-                                    </tr>
                                     </tbody>
 
                                 </table>
@@ -97,26 +86,17 @@
                             <div class="container">
                                 <p class="h4 mb-4 d-flex justify-content-center">Add User</p>
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <form action="#" th:action="@{/admin/save}" th:object="${user}" method="POST">
-                                        <!-- Hidden form field for updates -->
-                                        <input type="hidden" th:field="*{id}">
-                                        <input type="text" th:field="*{username}" placeholder="Username"
-                                               class="form-control mb-4 ">
-                                        <input type="text" th:field="*{formPassword}" placeholder="Password"
-                                               class="form-control mb-4 ">
-                                        <input type="text" th:field="*{firstName}" placeholder="First name"
-                                               class="form-control mb-4 ">
-                                        <input type="text" th:field="*{lastName}" placeholder="Last name"
-                                               class="form-control mb-4 ">
-                                        <input type="text" th:field="*{email}" placeholder="Email"
-                                               class="form-control mb-4 ">
-                                        <div th:each="role : ${roles}" class="form-check mb-4" style="width:auto;">
-                                            <input class="form-check-input role-checkbox" type="checkbox" th:field="*{roleIds}"
-                                                   th:value="${role.id}" th:id="${'role-' + role.id}" onchange="waterfallCheckbox(this)">
-                                            <label class="form-check-label" th:for="${'role-' + role.id}"
-                                                   th:text="${#strings.replace(role, 'ROLE_', '')}">
-                                                Role name
-                                            </label>
+                                    <form id="newUserForm">
+                                        <input type="text" name="username" placeholder="Username"
+                                            class="form-control mb-4 ">
+                                        <input type="text" name="formPassword" placeholder="Password"
+                                            class="form-control mb-4 " value="password">
+                                        <input type="text" name="firstName" placeholder="First name"
+                                            class="form-control mb-4 ">
+                                        <input type="text" name="lastName" placeholder="Last name"
+                                            class="form-control mb-4 ">
+                                        <input type="text" name="email" placeholder="Email" class="form-control mb-4 ">
+                                        <div id="role-container">
                                         </div>
                                         <button type="submit" class="btn btn-success my-2">Save</button>
                                     </form>
@@ -128,165 +108,59 @@
             </div>
         </div>
     </div>
-<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="updateModalLabel">Update/Delete Form</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="userForm" action="#" th:action="@{/admin/save}" th:object="${user}" method="POST" class="d-flex flex-column align-items-center">
-                    <!-- Hidden form field for updates -->
-                    <label for="formId" class="col-form-label fw-bold">Id:</label>
-                    <input type="number" id="formId" th:field="*{id}" class="form-control w-50 mb-2 "
-                           style="background-color: var(--bs-gray-200);" readonly>
-                    <label for="formUsername" class="col-form-label fw-bold">Username:</label>
-                    <input type="text" id="formUsername" th:field="*{username}" class="form-control mb-2 w-50 to-be-disabled">
-                    <div id="passwordContainer" class="d-flex flex-column align-items-center w-100">
-                        <label for="formPassword" class="col-form-label fw-bold">Password:</label>
-                        <input type="text" id="formPassword" th:field="*{formPassword}" class="form-control mb-2 w-50">
-                    </div>
-                    <label for="formFirstName" class="col-form-label fw-bold">First name:</label>
-                    <input type="text" id="formFirstName" th:field="*{firstName}" class="form-control mb-2 w-50 to-be-disabled">
-                    <label for="formLastName" class="col-form-label fw-bold">Last name:</label>
-                    <input type="text" id="formLastName" th:field="*{lastName}" class="form-control mb-2 w-50 to-be-disabled">
-                    <label for="formEmail" class="col-form-label fw-bold">Email:</label>
-                    <input type="text" id="formEmail" th:field="*{email}" class="form-control mb-2 w-50 to-be-disabled">
-                    <label for="formRole" class="col-form-label fw-bold">Role:</label>
-                    <div id="formRole" th:each="role : ${roles}" class="form-check mb-4" style="width:auto;">
-                        <input class="form-check-input role-checkbox" type="checkbox" th:field="*{roleIds}"
-                               th:value="${role.id}" th:id="${'role-' + role.id}" onchange="waterfallCheckbox(this)">
-                        <label class="form-check-label" th:for="${'role-' + role.id}"
-                               th:text="${#strings.replace(role, 'ROLE_', '')}">
-                            Role name
-                        </label>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button id="updateButton" type="submit" form="userForm" class="btn btn-success my-2">Save</button>
-                <a id="deleteButton" class="btn btn-danger btn-sm"
-                        onclick="if (!(confirm('Are you sure you want to delete this user?'))) return false"> <!--th:href="@{/admin/delete(userId=${tempUser.id})}"-->
-                    Delete
-                </a>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="updateModalLabel">Update/Delete Form</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="userForm" class="d-flex flex-column align-items-center">
+                        <label for="formId" class="col-form-label fw-bold">Id:</label>
+                        <input type="number" id="formId" name="id" class="form-control w-50 mb-2 "
+                            style="background-color: var(--bs-gray-200);" readonly>
+                        <label for="formUsername" class="col-form-label fw-bold">Username:</label>
+                        <input type="text" id="formUsername" name="username"
+                            class="form-control mb-2 w-50 to-be-disabled">
+                        <div id="passwordContainer" class="d-flex flex-column align-items-center w-100">
+                            <label for="formPassword" class="col-form-label fw-bold">Password:</label>
+                            <input type="text" id="formPassword" name="formPassword" class="form-control mb-2 w-50">
+                        </div>
+                        <label for="formFirstName" class="col-form-label fw-bold">First name:</label>
+                        <input type="text" id="formFirstName" name="firstName"
+                            class="form-control mb-2 w-50 to-be-disabled">
+                        <label for="formLastName" class="col-form-label fw-bold">Last name:</label>
+                        <input type="text" id="formLastName" name="lastName"
+                            class="form-control mb-2 w-50 to-be-disabled">
+                        <label for="formEmail" class="col-form-label fw-bold">Email:</label>
+                        <input type="text" id="formEmail" name="email" class="form-control mb-2 w-50 to-be-disabled">
+                        <label for="formRole" class="col-form-label fw-bold">Role:</label>
+                        <div id="formRole">
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="updateButton" type="submit" form="userForm" class="btn btn-success my-2">Save</button>
+                    <a id="deleteButton" class="btn btn-danger btn-sm"
+                        onclick="if (!(confirm('Are you sure you want to delete this user?'))) return false">
+                        Delete
+                    </a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        id="closeButton">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script th:inline="javascript">
-    const allUsers = [[${users}]];
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-<script>
-    const updateModal = document.getElementById('updateModal')
-if (updateModal) {
-  updateModal.addEventListener('show.bs.modal', event => {
-    // Button that triggered the modal
-    const button = event.relatedTarget
-
-    // Extract info from data-* attributes
-    const userId = button.getAttribute('data-bs-id')
-    const mode = button.getAttribute('data-bs-my-mode')
-    const user = allUsers.find(u => u.id == userId);
-
-    // Extract the elements
-    const modalTitle = updateModal.querySelector('.modal-title')
-    const formControl = updateModal.querySelectorAll('.to-be-disabled')
-    const formUpdateButton = updateModal.querySelector('#updateButton')
-    const formDeleteButton = updateModal.querySelector('#deleteButton')
-    const formPasswordContainer = updateModal.querySelector('#passwordContainer')
-
-    const checkboxes = updateModal.querySelectorAll('.role-checkbox');
-
-    const formId = updateModal.querySelector('#formId')
-    const formUsername = updateModal.querySelector('#formUsername')
-    const formPassword = updateModal.querySelector('#formPassword')
-    const formFirstName = updateModal.querySelector('#formFirstName')
-    const formLastName = updateModal.querySelector('#formLastName')
-    const formEmail = updateModal.querySelector('#formEmail')
-    const formRole = updateModal.querySelector('#formRole')
-
-
-    // Prepopulate the form
-    formId.value = user.id
-    formUsername.value = user.username
-    formPassword.value = user.formPassword
-    formFirstName.value = user.firstName
-    formLastName.value = user.lastName
-    formEmail.value = user.email
-
-    checkboxes.forEach(cb => {
-        const hasRole = user.roles.some(role => role.id.toString() === cb.value);
-        cb.checked = hasRole;
-    });
-
-    if (!Array.from(checkboxes).some(cb => cb.checked)) {
-        checkboxes[0].checked = true;
-    }
-
-    // Update the modal's content based on which button was pressed.
-
-    if(mode == `update`) {
-        modalTitle.textContent = `Update user`
-        formRole.disabled=false
-        formControl.forEach(element => {
-            element.disabled = false;
-        });
-        checkboxes.forEach(element => {
-            element.disabled = false;
-        });
-        formPasswordContainer.classList.remove('d-none');
-        formPasswordContainer.classList.add('d-flex');
-        formDeleteButton.hidden = true
-        formUpdateButton.hidden = false
-    } else {
-        modalTitle.textContent = `Delete user`
-        formDeleteButton.setAttribute('href', `/admin/delete?userId=${user.id}`)
-        formRole.disabled=true
-        formControl.forEach(element => {
-            element.disabled = true;
-        });
-        checkboxes.forEach(element => {
-            element.disabled = true;
-        });
-        formPasswordContainer.classList.add('d-none');
-        formPasswordContainer.classList.remove('d-flex');
-        formUpdateButton.hidden = true
-        formDeleteButton.hidden = false
-    }
-  })
-}
-</script>
-<script>
-    function waterfallCheckbox(clickedCheckbox) {
-        const container = clickedCheckbox.closest('.modal-body') || document;
-        const checkboxes = Array.from(container.querySelectorAll('.role-checkbox'));
-        const index = checkboxes.indexOf(clickedCheckbox);
-
-        if(clickedCheckbox.checked) {
-            for(let i=0; i < index; i++) {
-                checkboxes[i].checked = true;
-            }
-        } else {
-            for (let i = index + 1; i < checkboxes.length; i++) {
-                checkboxes[i].checked = false;
-            }
-        }
-
-        const anyChecked = checkboxes.some(cb => cb.checked);
-        if(!anyChecked) {
-            checkboxes[0].checked = true;
-        }
-
-    }
-    document.addEventListener("DOMContentLoaded", () => {
-        const checkboxes = document.querySelectorAll('.role-checkbox');
-        if (checkboxes.length > 0 && !Array.from(checkboxes).some(cb => cb.checked)) {
-            checkboxes[0].checked = true;
-        }
-    });
-</script>
+    <script type="text/javascript" th:src="@{/render-table.js}"></script>
+    <script type="text/javascript" th:src="@{/roles.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" th:src="@{/modal.js}"></script>
+    <script type="text/javascript" th:src="@{/form.js}"></script>
+    <script type="text/javascript" th:src="@{/waterfall.js}"></script>
 </body>
+
 </html>

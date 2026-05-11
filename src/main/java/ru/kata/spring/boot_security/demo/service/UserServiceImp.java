@@ -54,13 +54,13 @@ public class UserServiceImp implements UserService {
 
     @Transactional
     @Override
-    public void save(User user) {
+    public User save(User user) {
         user.setEnabled(true);
 
         user.setPassword(passwordEncoder.encode(user.getFormPassword()));
 
         user.setRoles(roleService.findByIds(user.getRoleIds()));
-        userDao.save(user);
+        return userDao.save(user);
     }
 
     @Transactional

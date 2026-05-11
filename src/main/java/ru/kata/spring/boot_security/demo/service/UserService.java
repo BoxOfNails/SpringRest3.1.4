@@ -12,6 +12,6 @@ public interface UserService extends UserDetailsService {
     User findById(int theId);
     void deleteById(int theId);
     User findByUserName(String username);
-    void save(User User);
+    User save(User User);
     void register(WebUserDto webUserDto);
 }
