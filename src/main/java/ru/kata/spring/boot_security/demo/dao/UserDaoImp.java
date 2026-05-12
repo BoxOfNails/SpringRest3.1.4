@@ -21,23 +21,18 @@ public class UserDaoImp implements UserDao {
                 "select user from User user " +
                         "join fetch user.roles", User.class);
 
-        // execute query and get result list
-        List<User> users = theQuery.getResultList();
-
         // return the results
-        return users;
+        return theQuery.getResultList();
     }
 
     @Override
     public User findById(int theId) {
-        User theUser = entityManager.find(User.class, theId);
-        return theUser;
+        return entityManager.find(User.class, theId);
     }
 
     @Override
     public User save(User theUser) {
-        User dbUser = entityManager.merge(theUser);
-        return dbUser;
+        return entityManager.merge(theUser);
     }
 
     @Override

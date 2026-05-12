@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Set;
 
 public interface RoleService {
-    Role findRoleByName(String theRoleName);
     List<Role> findAllRoles();
     Set<Role> findByIds(Set<Integer> theIds);
 }

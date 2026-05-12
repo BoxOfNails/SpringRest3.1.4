@@ -28,7 +28,7 @@ deleteButton.onclick = async (e) => {
   try {
     e.preventDefault()
     const theUserId = document.querySelector("#formId").value
-    let response = await fetch(`/api/users/${theUserId}`, {
+    let response = await fetch(`/api/users?userId=${theUserId}`, {
       method: "DELETE",
     })
     if (response) {

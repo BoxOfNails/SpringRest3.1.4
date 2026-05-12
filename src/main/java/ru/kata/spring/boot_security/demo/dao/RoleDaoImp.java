@@ -14,17 +14,10 @@ public class RoleDaoImp implements RoleDao{
     public RoleDaoImp(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
-    @Override
-    public Role findRoleByName(String roleName) {
-        TypedQuery<Role> query = entityManager.createQuery("from Role where name=:roleName", Role.class);
-        query.setParameter("roleName", roleName);
-        return query.getResultList().stream().findFirst().orElse(null);
-    }
 
     @Override
     public Role findById(int theId) {
-        Role theRole = entityManager.find(Role.class, theId);
-        return theRole;
+        return entityManager.find(Role.class, theId);
     }
 
     @Override
@@ -33,10 +26,7 @@ public class RoleDaoImp implements RoleDao{
         TypedQuery<Role> theQuery = entityManager.createQuery(
                 "from Role", Role.class);
 
-        // execute query and get result list
-        List<Role> roles = theQuery.getResultList();
-
         // return the results
-        return roles;
+        return theQuery.getResultList();
     }
 }

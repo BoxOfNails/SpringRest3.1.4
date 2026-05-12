@@ -18,12 +18,6 @@ public class RoleServiceImp implements RoleService{
 
     @Transactional(readOnly = true)
     @Override
-    public Role findRoleByName(String theRoleName) {
-        return roleDao.findRoleByName(theRoleName);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
     public List<Role> findAllRoles() {
         return roleDao.findAllRoles();
     }

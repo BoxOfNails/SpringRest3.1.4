@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
@@ -21,28 +22,25 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/api")
-public class UserRestController {
+public class AdminRestController {
 
     private UserService userService;
     private RoleService roleService;
     private Logger logger = Logger.getLogger(getClass().getName());
 
-    public UserRestController(UserService theUserservice, RoleService theRoleService) {
+    public AdminRestController(UserService theUserservice, RoleService theRoleService) {
         userService = theUserservice;
         roleService = theRoleService;
     }
 
     @GetMapping("/roles")
     public ResponseEntity<List<Role>> getRoles() {
-        List<Role> theRoles = roleService.findAllRoles();
-        return ResponseEntity.ok(theRoles);
+        return ResponseEntity.ok(roleService.findAllRoles());
     }
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getUsers() {
-        logger.info("In rest Controller");
-        List<User> theUsers = userService.findAllUsers();
-        return ResponseEntity.ok(theUsers);
+        return ResponseEntity.ok(userService.findAllUsers());
 
     }
 
@@ -57,9 +55,8 @@ public class UserRestController {
 
     @PostMapping("/users")
     public ResponseEntity<User> addUser(@RequestBody User theUser) {
-        theUser.setId(0);
-        User dbUser = userService.save(theUser);
-        return new ResponseEntity<>(theUser, HttpStatus.CREATED);
+//        theUser.setId(0);
+        return new ResponseEntity<>(userService.save(theUser), HttpStatus.CREATED);
     }
 
     @PutMapping("/users")
@@ -68,12 +65,11 @@ public class UserRestController {
         if(tempUser == null) {
             return ResponseEntity.notFound().build();
         }
-        tempUser = userService.save(theUser);
-        return ResponseEntity.ok(tempUser);
+        return ResponseEntity.ok(userService.save(theUser));
     }
 
-    @DeleteMapping("/users/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable int userId) {
+    @DeleteMapping("/users")
+    public ResponseEntity<String> deleteUser(@RequestParam(name = "userId") int userId) {
         User tempUser = userService.findById(userId);
         if(tempUser == null) {
             return ResponseEntity.notFound().build();

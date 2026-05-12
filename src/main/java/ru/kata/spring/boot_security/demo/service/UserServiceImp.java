@@ -9,10 +9,10 @@ import ru.kata.spring.boot_security.demo.dao.UserDao;
 import ru.kata.spring.boot_security.demo.dto.WebUserDto;
 import ru.kata.spring.boot_security.demo.entity.User;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -67,14 +67,15 @@ public class UserServiceImp implements UserService {
     @Override
     public void register(WebUserDto webUserDto) {
         User user = new User();
-
+        Set<Integer> roleIds = new HashSet<>();
+        roleIds.add(1);
         user.setUsername(webUserDto.getUsername());
         user.setFormPassword(webUserDto.getPassword());
         user.setFirstName(webUserDto.getFirstName());
         user.setLastName(webUserDto.getLastName());
         user.setEmail(webUserDto.getEmail());
 
-        user.setRoles(Stream.of(roleService.findRoleByName("ROLE_USER")).collect(Collectors.toSet()));
+        user.setRoleIds(roleIds);
 
         save(user);
     }
